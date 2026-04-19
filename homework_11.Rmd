@@ -36,9 +36,20 @@ freq_tab = flights %>%
 kable(head(freq_tab), caption = "First Six Frequencies of all Origin/Destination Pairs")
 ```
 
+## Origin Latitude and Longitude
 
+The following table showcases the first six rows of the previous frequency table with the origin's latitude and longitude added in:^[Question 2 Complete]
 
-2. Using airports, retrieve just the latitude and longitude of the origin airports and add those columns to your frequency table. Rename latitude and longitude to reflect these are the origin’s coordinates. Relocate the columns to be next to the origin column. Display a table of the first 6 rows.
+```{r}
+freq_tab_org = freq_tab %>%
+  left_join(
+    airports %>% select(faa, lat, lon),
+    join_by(origin == faa)) %>%
+  rename(origin_lat = lat, origin_lon = lon) %>%
+  relocate(origin_lat, origin_lon, .after = origin)
+
+kable(head(freq_tab_org), caption = "First Six Rows of the Frequency Table with Origin's Lat/Lon")
+```
 
 
 

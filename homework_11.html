@@ -501,8 +501,75 @@ kable(head(freq_tab), caption = &quot;First Six Frequencies of all Origin/Destin
 </tr>
 </tbody>
 </table>
-<ol start="2" style="list-style-type: decimal">
-<li><p>Using airports, retrieve just the latitude and longitude of the origin airports and add those columns to your frequency table. Rename latitude and longitude to reflect these are the origin’s coordinates. Relocate the columns to be next to the origin column. Display a table of the first 6 rows.</p></li>
+</div>
+<div id="origin-latitude-and-longitude" class="section level2">
+<h2>Origin Latitude and Longitude</h2>
+<p>The following table showcases the first six rows of the previous frequency table with the origin’s latitude and longitude added in:<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
+<pre class="r"><code>freq_tab_org = freq_tab %&gt;%
+  left_join(
+    airports %&gt;% select(faa, lat, lon),
+    join_by(origin == faa)) %&gt;%
+  rename(origin_lat = lat, origin_lon = lon) %&gt;%
+  relocate(origin_lat, origin_lon, .after = origin)
+
+kable(head(freq_tab_org), caption = &quot;First Six Rows of the Frequency Table with Origin&#39;s Lat/Lon&quot;)</code></pre>
+<table>
+<caption>First Six Rows of the Frequency Table with Origin’s Lat/Lon</caption>
+<thead>
+<tr class="header">
+<th align="left">origin</th>
+<th align="right">origin_lat</th>
+<th align="right">origin_lon</th>
+<th align="left">dest</th>
+<th align="right">n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">EWR</td>
+<td align="right">40.6925</td>
+<td align="right">-74.16867</td>
+<td align="left">ALB</td>
+<td align="right">439</td>
+</tr>
+<tr class="even">
+<td align="left">EWR</td>
+<td align="right">40.6925</td>
+<td align="right">-74.16867</td>
+<td align="left">ANC</td>
+<td align="right">8</td>
+</tr>
+<tr class="odd">
+<td align="left">EWR</td>
+<td align="right">40.6925</td>
+<td align="right">-74.16867</td>
+<td align="left">ATL</td>
+<td align="right">5022</td>
+</tr>
+<tr class="even">
+<td align="left">EWR</td>
+<td align="right">40.6925</td>
+<td align="right">-74.16867</td>
+<td align="left">AUS</td>
+<td align="right">968</td>
+</tr>
+<tr class="odd">
+<td align="left">EWR</td>
+<td align="right">40.6925</td>
+<td align="right">-74.16867</td>
+<td align="left">AVL</td>
+<td align="right">265</td>
+</tr>
+<tr class="even">
+<td align="left">EWR</td>
+<td align="right">40.6925</td>
+<td align="right">-74.16867</td>
+<td align="left">BDL</td>
+<td align="right">443</td>
+</tr>
+</tbody>
+</table>
+<ol start="3" style="list-style-type: decimal">
 <li><p>Using airports, retrieve just the latitude and longitude of the destination airports and add those columns to your frequency table. Rename latitude and longitude to reflect these are the destination’s coordinates. Relocate the columns to be next to the destination column. Display a table of the first 6 rows.</p></li>
 <li><p>Make sure the maps package is loaded (and installed, if necessary). Use the following code to display a map of the continental United States:</p></li>
 </ol>
@@ -527,6 +594,7 @@ kable(head(freq_tab), caption = &quot;First Six Frequencies of all Origin/Destin
 <hr />
 <ol>
 <li id="fn1"><p>Question 1 Complete<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>Question 2 Complete<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
 
