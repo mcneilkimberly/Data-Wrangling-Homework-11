@@ -68,7 +68,7 @@ kable(head(freq_tab_dest), caption = "First Six Rows of the Frequency Table with
 
 # Map of the U.S.A
 
-The following image shows a map of the continental United States: 
+The following image shows a map of the continental United States:^[Question 4 Complete]
 
 ```{r}
 ggplot() +
@@ -80,16 +80,35 @@ ggplot() +
   coord_fixed(1.3)
 ```
 
-
-
+## U.S. Map with Flight Lines
 
 5. Look up the geom_segment() function (outside of your Rmd file). Add a geom_segment() that draws a line from each origin to each destination, with transparency mapped to the frequency of that origin-destination pair. Display the resulting plot. 
 
+Now, let's look at our U.S. map with lines from each origin to each destination, with transparency mapped to the frequency of that origin-destination pair:^[Question 5 Complete]
+
 ```{r}
-#geom_segment(data = FREQ_TAB, mapping = aes(...))
+ggplot() +
+  geom_polygon(
+    data = map_data("state"),
+    aes(x = long, y = lat, group = group),
+    fill = NA, color = "gray"
+  ) +
+  geom_segment(
+    data = freq_tab_dest,
+    aes(
+      x = origin_lon,
+      y = origin_lat,
+      xend = dest_lon,
+      yend = dest_lat,
+      alpha = n
+    ),
+    color = "blue"
+  ) +
+  coord_fixed(1.3)
 ```
 
 
+##
 
 6. You should see a small number of flights leave the continental US. Filter them out and re-plot.
 
