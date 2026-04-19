@@ -1,0 +1,74 @@
+---
+title: "Homework 11"
+author: "Kimberly McNeil"
+date: "4/18/2026"
+output:
+  html_document:
+    code_folding: hide
+linkcolor: blue
+urlcolor: blue
+---
+
+```{r setup, include=FALSE, echo=TRUE}
+knitr::opts_chunk$set(
+  echo = TRUE)#, 
+  #warning=FALSE, 
+  #message=FALSE
+  #)
+library(knitr)
+library(dplyr)
+library(tidyverse)
+library(nycflights13)
+library(maps)
+```
+
+# NYC Flights Data
+
+Let's make a map of flights out of New York City in 2013.
+
+## Frequencies of Origin/Destination Pairs
+
+The following table showcases the first six frequencies of all origin/destination pairs:^[Question 1 Complete]
+```{r}
+freq_tab = flights %>%
+  count(origin, dest)
+
+kable(head(freq_tab), caption = "First Six Frequencies of all Origin/Destination Pairs")
+```
+
+
+
+2. Using airports, retrieve just the latitude and longitude of the origin airports and add those columns to your frequency table. Rename latitude and longitude to reflect these are the origin’s coordinates. Relocate the columns to be next to the origin column. Display a table of the first 6 rows.
+
+
+
+3. Using airports, retrieve just the latitude and longitude of the destination airports and add those columns to your frequency table. Rename latitude and longitude to reflect these are the destination’s coordinates. Relocate the columns to be next to the destination column. Display a table of the first 6 rows.
+
+
+
+4. Make sure the maps package is loaded (and installed, if necessary). Use the following code to display a map of the continental United States: 
+
+```{r}
+ggplot() +
+  geom_polygon(
+    data = map_data("state") ,
+    mapping = aes(x = long, y = lat, group = group),
+    fill = NA, color = "gray"
+    ) +
+  coord_fixed(1.3)
+```
+
+
+
+
+5. Look up the geom_segment() function (outside of your Rmd file). Add a geom_segment() that draws a line from each origin to each destination, with transparency mapped to the frequency of that origin-destination pair. Display the resulting plot. 
+
+```{r}
+#geom_segment(data = FREQ_TAB, mapping = aes(...))
+```
+
+
+
+6. You should see a small number of flights leave the continental US. Filter them out and re-plot.
+
+
