@@ -11,10 +11,10 @@ urlcolor: blue
 
 ```{r setup, include=FALSE, echo=TRUE}
 knitr::opts_chunk$set(
-  echo = TRUE)#, 
-  #warning=FALSE, 
-  #message=FALSE
-  #)
+  echo = TRUE, 
+  warning=FALSE, 
+  message=FALSE
+  )
 library(knitr)
 library(dplyr)
 library(tidyverse)
@@ -82,8 +82,6 @@ ggplot() +
 
 ## U.S. Map with Flight Lines
 
-5. Look up the geom_segment() function (outside of your Rmd file). Add a geom_segment() that draws a line from each origin to each destination, with transparency mapped to the frequency of that origin-destination pair. Display the resulting plot. 
-
 Now, let's look at our U.S. map with lines from each origin to each destination, with transparency mapped to the frequency of that origin-destination pair:^[Question 5 Complete]
 
 ```{r}
@@ -107,9 +105,33 @@ ggplot() +
   coord_fixed(1.3)
 ```
 
+## U.S. Map with Flight Lines (only within the U.S.)
 
-##
+Some of those flights left the U.S., so let's look at only the ones contained in the U.S.^[Question 6 Complete]
 
-6. You should see a small number of flights leave the continental US. Filter them out and re-plot.
+```{r}
+freq_tab_us = freq_tab_dest %>%
+  filter(
+    dest_lon > -125, dest_lon < -66,
+    dest_lat > 25,  dest_lat < 50
+  )
 
-
+ggplot() +
+  geom_polygon(
+    data = map_data("state"),
+    aes(x = long, y = lat, group = group),
+    fill = NA, color = "gray"
+  ) +
+  geom_segment(
+    data = freq_tab_us,
+    aes(
+      x = origin_lon,
+      y = origin_lat,
+      xend = dest_lon,
+      yend = dest_lat,
+      alpha = n
+    ),
+    color = "blue"
+  ) +
+  coord_fixed(1.3)
+```
