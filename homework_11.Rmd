@@ -51,13 +51,24 @@ freq_tab_org = freq_tab %>%
 kable(head(freq_tab_org), caption = "First Six Rows of the Frequency Table with Origin's Lat/Lon")
 ```
 
+## Destination Latitude Longitude
 
+The following table showcases the first six rows of the previous frequency table with both the origin's latitude and longitude added in:^[Question 3 Complete]
 
-3. Using airports, retrieve just the latitude and longitude of the destination airports and add those columns to your frequency table. Rename latitude and longitude to reflect these are the destination’s coordinates. Relocate the columns to be next to the destination column. Display a table of the first 6 rows.
+```{r}
+freq_tab_dest = freq_tab_org %>%
+  left_join(
+    airports %>% select(faa, lat, lon),
+    join_by(dest == faa)) %>%
+  rename(dest_lat = lat, dest_lon = lon) %>%
+  relocate(dest_lat, dest_lon, .after = dest)
 
+kable(head(freq_tab_dest), caption = "First Six Rows of the Frequency Table with both Origin and Dest's Lat/Lon")
+```
 
+# Map of the U.S.A
 
-4. Make sure the maps package is loaded (and installed, if necessary). Use the following code to display a map of the continental United States: 
+The following image shows a map of the continental United States: 
 
 ```{r}
 ggplot() +
